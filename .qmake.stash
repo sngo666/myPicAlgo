@@ -1,0 +1,22 @@
+QMAKE_CXX.QT_COMPILER_STDCXX = 201402L
+QMAKE_CXX.QMAKE_GCC_MAJOR_VERSION = 10
+QMAKE_CXX.QMAKE_GCC_MINOR_VERSION = 3
+QMAKE_CXX.QMAKE_GCC_PATCH_VERSION = 0
+QMAKE_CXX.COMPILER_MACROS = \
+    QT_COMPILER_STDCXX \
+    QMAKE_GCC_MAJOR_VERSION \
+    QMAKE_GCC_MINOR_VERSION \
+    QMAKE_GCC_PATCH_VERSION
+QMAKE_CXX.INCDIRS = \
+    E:/Software/tdmgcc/lib/gcc/x86_64-w64-mingw32/10.3.0/include/c++ \
+    E:/Software/tdmgcc/lib/gcc/x86_64-w64-mingw32/10.3.0/include/c++/x86_64-w64-mingw32 \
+    E:/Software/tdmgcc/lib/gcc/x86_64-w64-mingw32/10.3.0/include/c++/backward \
+    E:/Software/tdmgcc/lib/gcc/x86_64-w64-mingw32/10.3.0/include \
+    E:/Software/tdmgcc/include \
+    E:/Software/tdmgcc/lib/gcc/x86_64-w64-mingw32/10.3.0/include-fixed \
+    E:/Software/tdmgcc/x86_64-w64-mingw32/include
+QMAKE_CXX.LIBDIRS = \
+    E:/Software/tdmgcc/lib/gcc/x86_64-w64-mingw32/10.3.0 \
+    E:/Software/tdmgcc/lib/gcc \
+    E:/Software/tdmgcc/x86_64-w64-mingw32/lib \
+    E:/Software/tdmgcc/lib

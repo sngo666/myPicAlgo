@@ -1,0 +1,15 @@
+.history/
+.vscode/
+debug/
+release/
+build
+
+
+Makefile*
+qmake.stash
+ZERO_CHECK*
+CMakeLists*
+ALL_BUILD.vcxproj*
+compile_flags*
+.clang*
+myPicAlgo-lib.vcxproj*
