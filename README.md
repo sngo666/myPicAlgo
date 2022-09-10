@@ -11,8 +11,8 @@
 * qt5
 * qmake
 
-> build方式
-> 执行start.bat,或阅读脚本内容，单独执行你需要的指令。
+> build方式  
+> 执行start.bat, 或阅读脚本内容，单独执行你需要的指令。
 
 &emsp;
 
