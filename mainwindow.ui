@@ -27,7 +27,7 @@
      <string>DFT and IDFT</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="IDFT">
+   <widget class="QPushButton" name="openFolder">
     <property name="geometry">
      <rect>
       <x>-20</x>
@@ -193,7 +193,7 @@ p, li { white-space: pre-wrap; }
    <zorder>LogBrow</zorder>
    <zorder>cleanBar</zorder>
    <zorder>DFT</zorder>
-   <zorder>IDFT</zorder>
+   <zorder>openFolder</zorder>
    <zorder>InputPhoto</zorder>
    <zorder>Developer</zorder>
    <zorder>myFilePath</zorder>

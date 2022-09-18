@@ -14,7 +14,9 @@
 #include <Qlabel.h>
 #include <QtCore/qmath.h>
 #include <cmath>
+#include <cstring>
 #include <opencv2/opencv.hpp>
+#include <qprocess.h>
 #include <stdlib.h>
 
 using namespace cv;
@@ -31,6 +33,11 @@ static Mat tempDFTMat;
 static Mat tempIDFTMat;
 static int sendflag;
 static int systembusy;
+
+String fileToFolder(QSTring str)
+{
+    String Folder
+}
 class workThread : public QObject
 {
     // int id;
@@ -61,7 +68,7 @@ class MainWindow : public QMainWindow
   public slots:
     void DFT_clicked();
     void INPUT_clicked();
-    void IDFT_clicked();
+    void openFolder_clicked();
     void SLOT_openDFTWidget();
     void receiveData(QString);
     void createConnection();

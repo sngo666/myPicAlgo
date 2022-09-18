@@ -1,7 +1,7 @@
-#include <iostream>
-#include <cmath>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <cmath>
+#include <iostream>
 
 #include "dft.h"
 #include "ui_dft.h"
@@ -24,23 +24,21 @@ MainWindow::MainWindow(QWidget *parent)
     QTimer *timer = new QTimer(this);
     timer->start(100);
 
-    connect(timer, &QTimer::timeout,
-            [=]()
-            {
-                if (ui->cleanLog->isDown() == false)
-                {
-                    i--;
-                    ui->cleanBar->setValue(i);
-                    if (i <= 0)
-                        i = 0;
-                }
-                if (i >= 10)
-                    i = 0;
-            });
+    connect(timer, &QTimer::timeout, [=]() {
+        if (ui->cleanLog->isDown() == false)
+        {
+            i--;
+            ui->cleanBar->setValue(i);
+            if (i <= 0)
+                i = 0;
+        }
+        if (i >= 10)
+            i = 0;
+    });
 
-    this->PrintLog("ui initialized\n", "blue", "5");
+    this->PrintLog("ui initialized\n", "blue", "4");
     connect(ui->DFT, SIGNAL(clicked()), this, SLOT(DFT_clicked()));
-    connect(ui->IDFT, SIGNAL(clicked()), this, SLOT(IDFT_clicked()));
+    connect(ui->IDFT, SIGNAL(clicked()), this, SLOT(openFolder_clicked()));
     connect(ui->InputPhoto, SIGNAL(clicked()), this, SLOT(INPUT_clicked()));
 
     ui->cleanLog->setText("press to clean log");
@@ -49,27 +47,21 @@ MainWindow::MainWindow(QWidget *parent)
     ui->cleanLog->setAutoRepeatDelay(200);   //触发长按的时间
     ui->cleanLog->setAutoRepeatInterval(50); //长按时click信号间隔
 
-    connect(ui->openDFT, SIGNAL(clicked(bool)), this, SLOT(SLOT_openDFTWidget()));
-    connect(ui->openIDFT, SIGNAL(clicked(bool)), this, SLOT(SLOT_openIDFTWidget()));
+    connect(ui->openDFT, SIGNAL(clicked(bool)), this,
+            SLOT(SLOT_openDFTWidget()));
+    connect(ui->openIDFT, SIGNAL(clicked(bool)), this,
+            SLOT(SLOT_openIDFTWidget()));
 
-    connect(ui->cleanLog, &QPushButton::clicked,
-            [&]
-            {
-                // this->PrintLog("Button is down!\n", "blue", "5");
-                i++;
-                ui->cleanBar->setValue(i);
-                if (i >= 10)
-                {
-                    i = 0;
-                    ui->LogBrow->setText("");
-                }
-            }); //将最大值控制在10
-    // connect(ui->cleanLog, &QPushButton::released,
-    //         [&]
-    //         {
-    //             i = 0;
-    //             ui->cleanBar->setValue(i);
-    //         });
+    connect(ui->cleanLog, &QPushButton::clicked, [&] {
+        // this->PrintLog("Button is down!\n", "blue", "5");
+        i++;
+        ui->cleanBar->setValue(i);
+        if (i >= 10)
+        {
+            i = 0;
+            ui->LogBrow->setText("");
+        }
+    });
 }
 
 void MainWindow::DFT_clicked()
@@ -77,13 +69,14 @@ void MainWindow::DFT_clicked()
 
     if (systembusy == 1)
     {
-        this->PrintLog("System Busy!!!", "red", "5");
+        this->PrintLog("System Busy!!!", "red", "4");
         return;
     }
 
     // this->PrintLog("DFT Pressed\n", "blue", "5");
     connect(this, SIGNAL(sendMat(Mat &)), dftWidget, SLOT(receiveMat(Mat &)));
-    connect(this, SIGNAL(sendIDFTMat(Mat &)), idftWidget, SLOT(receiveIDFTMat(Mat &)));
+    connect(this, SIGNAL(sendIDFTMat(Mat &)), idftWidget,
+            SLOT(receiveIDFTMat(Mat &)));
 
     QString fileName = ui->myFilePath->toPlainText();
     if (fileName.isEmpty())
@@ -94,8 +87,9 @@ void MainWindow::DFT_clicked()
     Mat mat = imread(name, 0);
     // Mat dftMat = this->dftTransfer(mat);
 
-    // connect(worker, SIGNAL(sendMainMat(MAt &)), this, SLOT(receiveMainMat(MAt &)), Qt::DirectConnection);
-    // connect(worker, SIGNAL(sendMainIDFTMat(MAt &)), this, SLOT(receiveMainIDFTMat(MAt &)), Qt::DirectConnection);
+    // connect(worker, SIGNAL(sendMainMat(MAt &)), this, SLOT(receiveMainMat(MAt
+    // &)), Qt::DirectConnection); connect(worker, SIGNAL(sendMainIDFTMat(MAt
+    // &)), this, SLOT(receiveMainIDFTMat(MAt &)), Qt::DirectConnection);
 
     // if (dftMat == NULL)
 
@@ -109,30 +103,31 @@ void MainWindow::DFT_clicked()
 
     connect(m_workerThread, &QThread::started, worker, &workThread::startWork);
     connect(worker, &workThread::workFinished, m_workerThread, &QThread::quit);
-    connect(m_workerThread, &QThread::finished, m_workerThread, &QThread::deleteLater);
-    connect(this, SIGNAL(sendThPath(QString)), worker, SLOT(getFilePath(QString)));
+    connect(m_workerThread, &QThread::finished, m_workerThread,
+            &QThread::deleteLater);
+    connect(this, SIGNAL(sendThPath(QString)), worker,
+            SLOT(getFilePath(QString)));
     emit sendThPath(fileName);
 
     QTimer *tr = new QTimer(this);
 
     tr->start(10);
 
-    connect(tr, &QTimer::timeout,
-            [=]()
-            {
+    connect(tr, &QTimer::timeout, [=]() {
         if (sendflag == 1)
         {
             m_workerThread->quit();
             m_workerThread->wait();
-            this->PrintLog("DFT && IDFT Complete!!!", "green", "5");
+            this->PrintLog("DFT && IDFT Complete!!!", "green", "4");
 
             emit sendMat(tempDFTMat);
             emit sendIDFTMat(tempIDFTMat);
             sendflag = 0;
-        } });
+        }
+    });
 
     worker->moveToThread(m_workerThread);
-    this->PrintLog("starting DFT && IDFT....", "purple", "5");
+    this->PrintLog("starting DFT && IDFT....", "purple", "4");
 
     m_workerThread->start();
     // emit sendMat(tempDFTMat);
@@ -140,8 +135,8 @@ void MainWindow::DFT_clicked()
 void MainWindow::INPUT_clicked()
 {
     // this->PrintLog("INPUT Pressed\n", "blue", "5");
-    QString filePath =
-        QFileDialog::getOpenFileName(this, tr("Put in Picture"), ".", tr("Image Files(*.jpg *.png)"));
+    QString filePath = QFileDialog::getOpenFileName(
+        this, tr("Put in Picture"), ".", tr("Image Files(*.jpg *.png)"));
     // const char *fileRealPath = filePath.toStdString().c_str();
     if (!filePath.isEmpty())
     {
@@ -165,35 +160,43 @@ void MainWindow::INPUT_clicked()
     matPrint(mat);
 }
 
-void MainWindow::IDFT_clicked()
+void MainWindow::openFolder_clicked()
 {
     if (systembusy == 1)
     {
-        this->PrintLog("System Busy!!!", "red", "5");
+        this->PrintLog("System Busy!!!", "red", "4");
         return;
     }
-    // this->PrintLog("IDFT Pressed\n", "blue", "5");
-    connect(this, SIGNAL(sendIDFTMat(Mat &)), idftWidget, SLOT(receiveIDFTMat(Mat &)));
     QString fileName = ui->myFilePath->toPlainText();
     QTextCodec *code = QTextCodec::codecForName("gb18030");
 
-    std::string name = code->fromUnicode(fileName).data();
-    Mat mat = imread(name, 0);
-    // emit sendIDFTMat(idftMat);
-    // Mat dftMat = this->dftTransfer(mat);
+    QStringList para;
+    para << QDir::toNativeSeparators(fileName);
+    String fileStr = fileName.toStdString();
+
+    if (fileName.isEmpty())
+    {
+        this->PrintLog("there's no Path!", "red", "4");
+    }
+    else
+    {
+        QProcess::startDetached("explorer", para);
+    }
 }
 
 void MainWindow::PrintLog(const QString qstr, QString color, QString size)
 {
     ui->LogBrow->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
-    ui->LogBrow->append("<font size=\"" + size + "\"" + " color=\"" + color + "\"" + ">" + qstr + "</font>");
+    ui->LogBrow->append("<font size=\"" + size + "\"" + " color=\"" + color +
+                        "\"" + ">" + qstr + "</font>");
 }
 
 void MainWindow::SLOT_openDFTWidget()
 {
     QDesktopWidget *desktop = QApplication::desktop();
     dftWidget->show();
-    dftWidget->move(this->width() * 0.2, (desktop->height() / 2 - this->height() / 2));
+    dftWidget->move(this->width() * 0.2,
+                    (desktop->height() / 2 - this->height() / 2));
     QString pathStr = ui->myFilePath->toPlainText();
     if (pathStr.isEmpty())
     {
@@ -210,7 +213,8 @@ void MainWindow::SLOT_openIDFTWidget()
 {
     QDesktopWidget *desktop = QApplication::desktop();
     idftWidget->show();
-    idftWidget->move(desktop->width() - this->width() * 0.9, desktop->height() / 2 - this->height() / 2);
+    idftWidget->move(desktop->width() - this->width() * 0.9,
+                     desktop->height() / 2 - this->height() / 2);
     QString pathStr = ui->myFilePath->toPlainText();
     if (pathStr.isEmpty())
     {
@@ -230,9 +234,12 @@ void MainWindow::childTest()
 
 void MainWindow::createConnection()
 {
-    //     connect(dftWidget, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
-    connect(this, SIGNAL(sendData(QString)), dftWidget, SLOT(receiveData(QString)));
-    connect(this, SIGNAL(sendData(QString)), idftWidget, SLOT(receiveData(QString)));
+    //     connect(dftWidget, SIGNAL(sendData(QString)), this,
+    //     SLOT(receiveData(QString)));
+    connect(this, SIGNAL(sendData(QString)), dftWidget,
+            SLOT(receiveData(QString)));
+    connect(this, SIGNAL(sendData(QString)), idftWidget,
+            SLOT(receiveData(QString)));
 }
 
 void MainWindow::receiveData(QString data)
@@ -244,8 +251,9 @@ void MainWindow::matPrint(Mat &m_srcImage)
 {
     if (m_srcImage.data)
     {
-        QImage img = QImage((const uchar *)m_srcImage.data, m_srcImage.cols, m_srcImage.rows,
-                            m_srcImage.cols * m_srcImage.channels(), QImage::Format_Indexed8);
+        QImage img = QImage(
+            (const uchar *)m_srcImage.data, m_srcImage.cols, m_srcImage.rows,
+            m_srcImage.cols * m_srcImage.channels(), QImage::Format_Indexed8);
         ui->Pic->clear();
         int m_nImgWidth = m_srcImage.cols;  //图像宽
         int m_nImgHeight = m_srcImage.rows; //图像高
@@ -306,8 +314,9 @@ MainWindow::~MainWindow()
 
 workThread::workThread(QObject *parent) : QObject(parent)
 {
-    //     connect(this, SIGNAL(sendThIDFTMat(Mat &)), idftWidget, SLOT(receiveIDFTMat(Mat &)));
-    //     connect(this, SIGNAL(sendThMat(Mat &)), dftWidget, SLOT(receiveMat(Mat &)));
+    //     connect(this, SIGNAL(sendThIDFTMat(Mat &)), idftWidget,
+    //     SLOT(receiveIDFTMat(Mat &))); connect(this, SIGNAL(sendThMat(Mat &)),
+    //     dftWidget, SLOT(receiveMat(Mat &)));
 }
 workThread::~workThread()
 {
@@ -427,7 +436,9 @@ void workThread::doWork()
     emit workFinished();
 }
 
-void workThread::dftHandle(unsigned char **in_array, unsigned char **out_array, double **re_array, double **im_array, int height, int width)
+void workThread::dftHandle(unsigned char **in_array, unsigned char **out_array,
+                           double **re_array, double **im_array, int height,
+                           int width)
 {
     double re, im, t;
 
@@ -447,7 +458,8 @@ void workThread::dftHandle(unsigned char **in_array, unsigned char **out_array, 
                     re += in_array[x][y] * cos(2 * 3.1415926 * t);
                     im += (-1) * sin(2 * 3.1415926 * t) * in_array[x][y];
 
-                    //                 this->PrintLog(QString::number(re) + "\n", "blue", "5");
+                    //                 this->PrintLog(QString::number(re) +
+                    //                 "\n", "blue", "5");
                 }
             }
 
@@ -464,7 +476,8 @@ void workThread::dftHandle(unsigned char **in_array, unsigned char **out_array, 
     // printf("dft done\n");
 }
 
-void workThread::idftHandle(double **re_array, double **im_array, unsigned char **out_array, int height, int width)
+void workThread::idftHandle(double **re_array, double **im_array,
+                            unsigned char **out_array, int height, int width)
 {
     double real, temp, imagin, flag;
 
@@ -488,7 +501,8 @@ void workThread::idftHandle(double **re_array, double **im_array, unsigned char 
                 }
             }
             // * 1.0 / (width * height)
-            flag = (double)(((double)sqrt(real * real + imagin * imagin)) * 1.0 / (width * height)); //振幅
+            flag = (double)(((double)sqrt(real * real + imagin * imagin)) *
+                            1.0 / (width * height)); //振幅
             // out_array[i][j] = (unsigned char)atan(imagin / real); //振幅
 
             // if (flag > 255)

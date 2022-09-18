@@ -1,36 +1,36 @@
 #ifndef IDFT_H
 #define IDFT_H
 
-#include <QWidget>
 #include <QDialog.h>
-#include <opencv2/opencv.hpp>
 #include <QImage.h>
 #include <QTextCodec.h>
 #include <QThread.h>
+#include <QWidget.h>
+#include <opencv2/opencv.hpp>
 using namespace cv;
 
 namespace Ui
 {
-    class IDFT;
+class IDFT;
 }
 
 class IDFT : public QWidget
 {
     Q_OBJECT
 
-public slots:
+  public slots:
     void receiveData(QString);
     void receiveIDFTMat(Mat &);
-signals:
+  signals:
     void sendData(QString);
 
-public:
+  public:
     explicit IDFT(QWidget *parent = nullptr);
     ~IDFT();
     void ImagePrint(QString);
     void matPrint(Mat &);
 
-private:
+  private:
     Ui::IDFT *ui;
     Mat myMat;
 };
