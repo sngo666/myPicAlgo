@@ -3,7 +3,7 @@
 debug/
 release/
 build
-
+CMakeFiles/
 
 Makefile*
 qmake.stash
