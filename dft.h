@@ -1,40 +1,43 @@
 #ifndef DFT_H
 #define DFT_H
 
-#include <QWidget>
 #include <QDialog.h>
-#include <opencv2/opencv.hpp>
 #include <QImage.h>
+#include <QLabel.h>
 #include <QTextCodec.h>
+#include <opencv2/opencv.hpp>
+#include <qwidget.h>
+
 using namespace cv;
 
 class MainWindow;
 
 namespace Ui
 {
-    class DFT;
+class DFT;
 }
 
 class DFT : public QWidget
 {
     Q_OBJECT
 
-public slots:
-    void receiveData(QString);
-    void receiveMat(Mat &);
-signals:
+  public slots:
+    // void receiveData(QString);
+    void receiveDFTMat(Mat &);
+    void receiveIDFTMat(Mat &);
+
+  signals:
     void sendData(QString);
 
-public:
+  public:
     explicit DFT(QWidget *parent = nullptr);
     ~DFT();
-    void ImagePrint(QString);
-    void matPrint(Mat &);
+    void printMat(Mat &, QLabel *);
 
-
-private:
+  private:
     Ui::DFT *ui;
-    Mat myMat;
+    Mat dftMat;
+    Mat idftMat;
 };
 
 #endif // DFT_H

@@ -15,9 +15,21 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setFixedSize(this->width(), this->height());
+
+    QString updateTime(UPDATE);
+    // this->PrintLog(updateTime, "pink", "4");
+    ui->Developer->append("<font size=\" 4 \" color=\"green\">" + updateTime +
+                          "</font>");
+
     cout << "ui initialized" << endl;
     // this->setMinimumHeight(600);
     // this->setMinimumWidth(800);
+
+    ui->Developer->setFocusPolicy(Qt::NoFocus);
+    ui->Developer->setOpenLinks(true);
+    ui->Developer->setOpenExternalLinks(true);
+
     dftWidget = new DFT();
     idftWidget = new IDFT();
     systembusy = 0;
@@ -38,7 +50,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->PrintLog("ui initialized\n", "blue", "4");
     connect(ui->DFT, SIGNAL(clicked()), this, SLOT(DFT_clicked()));
-    connect(ui->IDFT, SIGNAL(clicked()), this, SLOT(openFolder_clicked()));
+    connect(ui->openFolder, SIGNAL(clicked()), this,
+            SLOT(openFolder_clicked()));
     connect(ui->InputPhoto, SIGNAL(clicked()), this, SLOT(INPUT_clicked()));
 
     ui->cleanLog->setText("press to clean log");
@@ -49,8 +62,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->openDFT, SIGNAL(clicked(bool)), this,
             SLOT(SLOT_openDFTWidget()));
-    connect(ui->openIDFT, SIGNAL(clicked(bool)), this,
-            SLOT(SLOT_openIDFTWidget()));
 
     connect(ui->cleanLog, &QPushButton::clicked, [&] {
         // this->PrintLog("Button is down!\n", "blue", "5");
@@ -74,8 +85,9 @@ void MainWindow::DFT_clicked()
     }
 
     // this->PrintLog("DFT Pressed\n", "blue", "5");
-    connect(this, SIGNAL(sendMat(Mat &)), dftWidget, SLOT(receiveMat(Mat &)));
-    connect(this, SIGNAL(sendIDFTMat(Mat &)), idftWidget,
+    connect(this, SIGNAL(sendDFTMat(Mat &)), dftWidget,
+            SLOT(receiveDFTMat(Mat &)));
+    connect(this, SIGNAL(sendIDFTMat(Mat &)), dftWidget,
             SLOT(receiveIDFTMat(Mat &)));
 
     QString fileName = ui->myFilePath->toPlainText();
@@ -85,18 +97,6 @@ void MainWindow::DFT_clicked()
     QTextCodec *code = QTextCodec::codecForName("gb18030");
     std::string name = code->fromUnicode(fileName).data();
     Mat mat = imread(name, 0);
-    // Mat dftMat = this->dftTransfer(mat);
-
-    // connect(worker, SIGNAL(sendMainMat(MAt &)), this, SLOT(receiveMainMat(MAt
-    // &)), Qt::DirectConnection); connect(worker, SIGNAL(sendMainIDFTMat(MAt
-    // &)), this, SLOT(receiveMainIDFTMat(MAt &)), Qt::DirectConnection);
-
-    // if (dftMat == NULL)
-
-    // int row = mat.rows;
-    // int col = mat.cols;
-    // Mat dftAutoScale(row, col, CV_8UC1);
-    // AutoScale(dftMat, dftAutoScale);
 
     m_workerThread = new QThread();
     worker = new workThread();
@@ -120,7 +120,7 @@ void MainWindow::DFT_clicked()
             m_workerThread->wait();
             this->PrintLog("DFT && IDFT Complete!!!", "green", "4");
 
-            emit sendMat(tempDFTMat);
+            emit sendDFTMat(tempDFTMat);
             emit sendIDFTMat(tempIDFTMat);
             sendflag = 0;
         }
@@ -130,6 +130,7 @@ void MainWindow::DFT_clicked()
     this->PrintLog("starting DFT && IDFT....", "purple", "4");
 
     m_workerThread->start();
+
     // emit sendMat(tempDFTMat);
 }
 void MainWindow::INPUT_clicked()
@@ -171,8 +172,11 @@ void MainWindow::openFolder_clicked()
     QTextCodec *code = QTextCodec::codecForName("gb18030");
 
     QStringList para;
-    para << QDir::toNativeSeparators(fileName);
-    String fileStr = fileName.toStdString();
+    QString folderPath = fileToFolder(fileName);
+    QString pathLog("Folder Path: ");
+    this->PrintLog(pathLog + folderPath, "orange", "3");
+
+    para << QDir::toNativeSeparators(folderPath);
 
     if (fileName.isEmpty())
     {
@@ -205,25 +209,7 @@ void MainWindow::SLOT_openDFTWidget()
     {
         createConnection();
         // emit sendData(pathStr);
-        this->PrintLog("data sent!\n", "blue", "5");
-    }
-}
-
-void MainWindow::SLOT_openIDFTWidget()
-{
-    QDesktopWidget *desktop = QApplication::desktop();
-    idftWidget->show();
-    idftWidget->move(desktop->width() - this->width() * 0.9,
-                     desktop->height() / 2 - this->height() / 2);
-    QString pathStr = ui->myFilePath->toPlainText();
-    if (pathStr.isEmpty())
-    {
-    }
-    else
-    {
-        createConnection();
-        // emit sendData(pathStr);
-        this->PrintLog("data sent!\n", "blue", "5");
+        // this->PrintLog("data sent!\n", "blue", "5");
     }
 }
 
@@ -514,4 +500,22 @@ void workThread::idftHandle(double **re_array, double **im_array,
             out_array[i][j] = (unsigned char)flag;
         }
     }
+}
+
+QString fileToFolder(const QString &str)
+{
+    QString Folder;
+    if (str.isEmpty())
+        return "";
+    int ptr = str.size();
+    for (int i = 0; i < str.size(); i++)
+    {
+        if (str[i] == '/')
+            ptr = i;
+    }
+    for (int i = 0; i < ptr; i++)
+    {
+        Folder.append(str[i]);
+    }
+    return Folder;
 }

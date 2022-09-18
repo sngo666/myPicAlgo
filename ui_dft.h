@@ -21,19 +21,23 @@ class Ui_DFT
 {
 public:
     QTextBrowser *textBrowser;
-    QLabel *displayPic;
+    QLabel *displayDFT;
+    QLabel *displayIDFT;
 
     void setupUi(QWidget *DFT)
     {
         if (DFT->objectName().isEmpty())
             DFT->setObjectName(QString::fromUtf8("DFT"));
-        DFT->resize(471, 559);
+        DFT->resize(397, 707);
         textBrowser = new QTextBrowser(DFT);
         textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
-        textBrowser->setGeometry(QRect(0, 0, 471, 41));
-        displayPic = new QLabel(DFT);
-        displayPic->setObjectName(QString::fromUtf8("displayPic"));
-        displayPic->setGeometry(QRect(70, 120, 321, 331));
+        textBrowser->setGeometry(QRect(0, 310, 391, 51));
+        displayDFT = new QLabel(DFT);
+        displayDFT->setObjectName(QString::fromUtf8("displayDFT"));
+        displayDFT->setGeometry(QRect(0, 0, 391, 291));
+        displayIDFT = new QLabel(DFT);
+        displayIDFT->setObjectName(QString::fromUtf8("displayIDFT"));
+        displayIDFT->setGeometry(QRect(0, 370, 391, 311));
 
         retranslateUi(DFT);
 
@@ -48,7 +52,8 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">this is a DFT Widget</p></body></html>", nullptr));
-        displayPic->setText(QString());
+        displayDFT->setText(QString());
+        displayIDFT->setText(QString());
     } // retranslateUi
 
 };

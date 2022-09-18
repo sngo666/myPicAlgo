@@ -1,5 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#define UPDATE "2022.9.18"
 
 #include <QDebug.h>
 #include <QDesktopWidget.h>
@@ -19,6 +20,7 @@
 #include <qprocess.h>
 #include <stdlib.h>
 
+
 using namespace cv;
 class DFT;
 class IDFT;
@@ -34,10 +36,8 @@ static Mat tempIDFTMat;
 static int sendflag;
 static int systembusy;
 
-String fileToFolder(QSTring str)
-{
-    String Folder
-}
+QString fileToFolder(const QString &);
+
 class workThread : public QObject
 {
     // int id;
@@ -72,7 +72,6 @@ class MainWindow : public QMainWindow
     void SLOT_openDFTWidget();
     void receiveData(QString);
     void createConnection();
-    void SLOT_openIDFTWidget();
 
   public:
     MainWindow(QWidget *parent = nullptr);
@@ -89,7 +88,7 @@ class MainWindow : public QMainWindow
     workThread *worker;
   signals:
     void sendData(QString);
-    void sendMat(Mat &);
+    void sendDFTMat(Mat &);
     void sendIDFTMat(Mat &);
     void sendThPath(QString);
 

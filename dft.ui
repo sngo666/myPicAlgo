@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>471</width>
-    <height>559</height>
+    <width>397</width>
+    <height>707</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
-     <width>471</width>
-     <height>41</height>
+     <y>310</y>
+     <width>391</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="html">
@@ -30,13 +30,26 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;this is a DFT Widget&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="displayPic">
+  <widget class="QLabel" name="displayDFT">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>120</y>
-     <width>321</width>
-     <height>331</height>
+     <x>0</x>
+     <y>0</y>
+     <width>391</width>
+     <height>291</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="displayIDFT">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>370</y>
+     <width>391</width>
+     <height>311</height>
     </rect>
    </property>
    <property name="text">

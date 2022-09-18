@@ -26,7 +26,7 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QPushButton *DFT;
-    QPushButton *IDFT;
+    QPushButton *openFolder;
     QPushButton *InputPhoto;
     QTextBrowser *Developer;
     QTextBrowser *myFilePath;
@@ -35,7 +35,6 @@ public:
     QPushButton *cleanLog;
     QProgressBar *cleanBar;
     QPushButton *openDFT;
-    QPushButton *openIDFT;
     QLabel *Pic;
     QStatusBar *statusbar;
 
@@ -49,18 +48,18 @@ public:
         DFT = new QPushButton(centralwidget);
         DFT->setObjectName(QString::fromUtf8("DFT"));
         DFT->setGeometry(QRect(-10, 40, 151, 31));
-        IDFT = new QPushButton(centralwidget);
-        IDFT->setObjectName(QString::fromUtf8("IDFT"));
-        IDFT->setGeometry(QRect(-20, 260, 161, 31));
+        openFolder = new QPushButton(centralwidget);
+        openFolder->setObjectName(QString::fromUtf8("openFolder"));
+        openFolder->setGeometry(QRect(-20, 210, 161, 31));
         InputPhoto = new QPushButton(centralwidget);
         InputPhoto->setObjectName(QString::fromUtf8("InputPhoto"));
         InputPhoto->setGeometry(QRect(-10, 0, 151, 31));
         Developer = new QTextBrowser(centralwidget);
         Developer->setObjectName(QString::fromUtf8("Developer"));
-        Developer->setGeometry(QRect(0, 300, 141, 111));
+        Developer->setGeometry(QRect(0, 240, 141, 111));
         myFilePath = new QTextBrowser(centralwidget);
         myFilePath->setObjectName(QString::fromUtf8("myFilePath"));
-        myFilePath->setGeometry(QRect(0, 90, 141, 171));
+        myFilePath->setGeometry(QRect(0, 90, 141, 121));
         LogBrow = new QTextBrowser(centralwidget);
         LogBrow->setObjectName(QString::fromUtf8("LogBrow"));
         LogBrow->setGeometry(QRect(470, 40, 191, 461));
@@ -80,10 +79,7 @@ public:
         cleanBar->setTextVisible(false);
         openDFT = new QPushButton(centralwidget);
         openDFT->setObjectName(QString::fromUtf8("openDFT"));
-        openDFT->setGeometry(QRect(0, 420, 141, 41));
-        openIDFT = new QPushButton(centralwidget);
-        openIDFT->setObjectName(QString::fromUtf8("openIDFT"));
-        openIDFT->setGeometry(QRect(0, 460, 141, 41));
+        openDFT->setGeometry(QRect(-10, 350, 151, 41));
         Pic = new QLabel(centralwidget);
         Pic->setObjectName(QString::fromUtf8("Pic"));
         Pic->setGeometry(QRect(150, 80, 311, 351));
@@ -92,13 +88,12 @@ public:
         LogBrow->raise();
         cleanBar->raise();
         DFT->raise();
-        IDFT->raise();
+        openFolder->raise();
         InputPhoto->raise();
         Developer->raise();
         myFilePath->raise();
         textBrowser->raise();
         openDFT->raise();
-        openIDFT->raise();
         Pic->raise();
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -113,19 +108,17 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         DFT->setText(QCoreApplication::translate("MainWindow", "DFT and IDFT", nullptr));
-        IDFT->setText(QCoreApplication::translate("MainWindow", "open Pic-Folder", nullptr));
+        openFolder->setText(QCoreApplication::translate("MainWindow", "open Pic-Folder", nullptr));
         InputPhoto->setText(QCoreApplication::translate("MainWindow", "Put in Picture", nullptr));
         Developer->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">MyGithub\357\274\232</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">https://github.com/sngo666</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"https://github.com/sngo666\"><span style=\" text-decoration: underline; color:#0000ff;\">MyGithub</span></a></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\342\200\224\342\200\224\342\200\224\342\200\224</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\345\210\266\344\275\234\346\227\266\351\227\264\357\274\232</p>\n"
-"<p style=\" margin"
-                        "-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">2022.9.4</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\346\233\264\346\226\260\346\227\266\351\227\264\357\274\232</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; marg"
+                        "in-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
         textBrowser->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -133,7 +126,6 @@ public:
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; color:#1201d4;\">System Log</span></p></body></html>", nullptr));
         cleanLog->setText(QString());
         openDFT->setText(QCoreApplication::translate("MainWindow", "open the DFT Widget", nullptr));
-        openIDFT->setText(QCoreApplication::translate("MainWindow", "open the IDFT Widget", nullptr));
         Pic->setText(QString());
     } // retranslateUi
 

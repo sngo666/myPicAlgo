@@ -3,4 +3,4 @@ uic dft.ui -o ui_dft.h
 uic idft.ui -o ui_idft.h
 qmake
 mingw32-make
-.\release\myDFT.exe
+.\release\myPicAlgo.exe
