@@ -6,8 +6,6 @@
 #include "dft.h"
 #include "ui_dft.h"
 
-#include "idft.h"
-#include "ui_idft.h"
 using namespace cv;
 using namespace std;
 
@@ -31,7 +29,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->Developer->setOpenExternalLinks(true);
 
     dftWidget = new DFT();
-    idftWidget = new IDFT();
     systembusy = 0;
     QTimer *timer = new QTimer(this);
     timer->start(100);
@@ -223,8 +220,6 @@ void MainWindow::createConnection()
     //     connect(dftWidget, SIGNAL(sendData(QString)), this,
     //     SLOT(receiveData(QString)));
     connect(this, SIGNAL(sendData(QString)), dftWidget,
-            SLOT(receiveData(QString)));
-    connect(this, SIGNAL(sendData(QString)), idftWidget,
             SLOT(receiveData(QString)));
 }
 

@@ -43,6 +43,7 @@ void DFT::printMat(Mat &m_srcImage, QLabel *label)
         int m_nImgWidth = m_srcImage.cols;  //图像宽
         int m_nImgHeight = m_srcImage.rows; //图像高
 
+        QPixmap pixmap = QPixmap::fromImage(img);
         int lWide = label->width();
         int lHeight = label->height();
         if (m_nImgWidth * 2 < lWide && m_nImgHeight * 2 < lHeight)
@@ -51,16 +52,16 @@ void DFT::printMat(Mat &m_srcImage, QLabel *label)
             lHeight = m_nImgHeight * 2;
         }
 
-        QPixmap pixmap = QPixmap::fromImage(img);
-        pixmap = pixmap.scaled(label->size());
-        label->setAutoFillBackground(true);
+        label->setPixmap(pixmap.scaled(lWide, lHeight, Qt::IgnoreAspectRatio));
+        // label->setAutoFillBackground(true);
         QPalette palette;
         palette.setBrush(label->backgroundRole(), QBrush(pixmap));
         label->setPalette(palette);
         label->repaint();
 
-        label->setScaledContents(true);
-        label->resize(lWide, lHeight);
+        // label->setScaledContents(true);
+
+        // label->resize(lWide, lHeight);
     }
 }
 

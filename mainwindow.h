@@ -20,10 +20,8 @@
 #include <qprocess.h>
 #include <stdlib.h>
 
-
 using namespace cv;
 class DFT;
-class IDFT;
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -99,8 +97,6 @@ class MainWindow : public QMainWindow
     QPushButton *Button_DFT;
     QPushButton *Button_IDFT;
     DFT *dftWidget;
-    IDFT *idftWidget;
-
     int i = 0;
     int tid_1;
 };
