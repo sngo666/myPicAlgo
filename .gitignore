@@ -4,7 +4,6 @@ debug/
 release/
 build
 CMakeFiles/
-
 Makefile*
 qmake.stash
 ZERO_CHECK*
