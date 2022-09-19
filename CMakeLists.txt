@@ -48,7 +48,10 @@ set(PROJECT_SOURCES
     mainwindow.ui
     dft.cpp
     dft.h
-    dft.ui)
+    dft.ui
+    lsb.cpp
+    lsb.h
+    lsb.ui)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
   qt_add_executable(myPicAlgo MANUAL_FINALIZATION ${PROJECT_SOURCES})

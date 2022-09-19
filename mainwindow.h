@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#define UPDATE "2022.9.18"
+#define UPDATE "2022.9.19"
 
 #include <QDebug.h>
 #include <QDesktopWidget.h>
@@ -22,10 +22,12 @@
 
 using namespace cv;
 class DFT;
+class lsb;
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class MainWindow;
+  class MainWindow;
 }
 QT_END_NAMESPACE
 
@@ -38,67 +40,71 @@ QString fileToFolder(const QString &);
 
 class workThread : public QObject
 {
-    // int id;
-    Q_OBJECT
-  public:
-    workThread(QObject *parent = nullptr);
-    ~workThread();
-    void dftHandle(unsigned char **, unsigned char **, double **, double **,
-                   int, int);
-    void idftHandle(double **, double **, unsigned char **, int, int);
-    QString fileName;
-  public slots:
-    void startWork();
-    void doWork();
-  signals:
-    void workFinished();
-    void workStart();
-    void sendThMat(Mat &);
-    void sendThIDFTMat(Mat &);
-  public slots:
-    void getFilePath(QString);
+  // int id;
+  Q_OBJECT
+public:
+  workThread(QObject *parent = nullptr);
+  ~workThread();
+  void dftHandle(unsigned char **, unsigned char **, double **, double **,
+                 int, int);
+  void idftHandle(double **, double **, unsigned char **, int, int);
+  QString fileName;
+public slots:
+  void startWork();
+  void doWork();
+signals:
+  void workFinished();
+  void workStart();
+  void sendThMat(Mat &);
+  void sendThIDFTMat(Mat &);
+public slots:
+  void getFilePath(QString);
 };
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+  Q_OBJECT
 
-  public slots:
-    void DFT_clicked();
-    void INPUT_clicked();
-    void openFolder_clicked();
-    void SLOT_openDFTWidget();
-    void receiveData(QString);
-    void createConnection();
+public slots:
+  void DFT_clicked();
+  void INPUT_clicked();
+  void openFolder_clicked();
+  void SLOT_openDFTWidget();
+  void SLOT_openLSBWidget();
+  void receiveData(QString);
+  void createConnection();
 
-  public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-    void PrintLog(const QString, QString, QString);
-    void childTest();
+public:
+  MainWindow(QWidget *parent = nullptr);
+  ~MainWindow();
+  void childTest();
 
-    // , long, long
-    // Mat dftTransfer(Mat &);
-    double tsin(double);
-    void matPrint(Mat &);
-    void AutoScale(Mat, Mat);
-    QThread *m_workerThread;
-    workThread *worker;
-  signals:
-    void sendData(QString);
-    void sendDFTMat(Mat &);
-    void sendIDFTMat(Mat &);
-    void sendThPath(QString);
+  // , long, long
+  // Mat dftTransfer(Mat &);
+  double tsin(double);
+  void matPrint(Mat &);
+  void AutoScale(Mat, Mat);
+  QThread *m_workerThread;
+  workThread *worker;
+signals:
+  void sendData(QString);
+  void sendDFTMat(Mat &);
+  void sendIDFTMat(Mat &);
+  void sendThPath(QString);
+  void sendFile(QString);
 
-  private:
-    Ui::MainWindow *ui;
-    QLabel *m_label;
-    QPushButton *Button_PutInPicture;
-    QPushButton *Button_DFT;
-    QPushButton *Button_IDFT;
-    DFT *dftWidget;
-    int i = 0;
-    int tid_1;
+private:
+  void PrintLog(const QString, QString, QString);
+
+  Ui::MainWindow *ui;
+  QLabel *m_label;
+  QPushButton *Button_PutInPicture;
+  QPushButton *Button_DFT;
+  QPushButton *Button_IDFT;
+  DFT *dftWidget;
+  lsb *lsbWidget;
+  int i = 0;
+  int tid_1;
 };
 
 #endif // MAINWINDOW_H

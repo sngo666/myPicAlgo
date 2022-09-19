@@ -164,14 +164,27 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="Pic">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>80</y>
-      <width>311</width>
-      <height>351</height>
+      <x>200</x>
+      <y>120</y>
+      <width>231</width>
+      <height>251</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="openLSB">
+    <property name="geometry">
+     <rect>
+      <x>-10</x>
+      <y>390</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>open the LSB Widget</string>
     </property>
    </widget>
    <zorder>cleanLog</zorder>
@@ -185,6 +198,7 @@ p, li { white-space: pre-wrap; }
    <zorder>textBrowser</zorder>
    <zorder>openDFT</zorder>
    <zorder>Pic</zorder>
+   <zorder>openLSB</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

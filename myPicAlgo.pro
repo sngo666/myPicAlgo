@@ -12,17 +12,20 @@ CONFIG += console
 SOURCES += \
     main.cpp \
     mainwindow.cpp\
-    dft.cpp
+    dft.cpp\
+    lsb.cpp
 
 
 HEADERS += \
     mainwindow.h\
-    dft.h
+    dft.h\
+    lsb.h
 
 
 FORMS += \
     mainwindow.ui\
-    dft.ui
+    dft.ui\
+    lsb.ui
 
 
 INCLUDEPATH += E:\opencv4.5.1\opencv\opencv-build\install\include

@@ -36,6 +36,7 @@ public:
     QProgressBar *cleanBar;
     QPushButton *openDFT;
     QLabel *Pic;
+    QPushButton *openLSB;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -82,7 +83,10 @@ public:
         openDFT->setGeometry(QRect(-10, 350, 151, 41));
         Pic = new QLabel(centralwidget);
         Pic->setObjectName(QString::fromUtf8("Pic"));
-        Pic->setGeometry(QRect(150, 80, 311, 351));
+        Pic->setGeometry(QRect(200, 120, 231, 251));
+        openLSB = new QPushButton(centralwidget);
+        openLSB->setObjectName(QString::fromUtf8("openLSB"));
+        openLSB->setGeometry(QRect(-10, 390, 151, 41));
         MainWindow->setCentralWidget(centralwidget);
         cleanLog->raise();
         LogBrow->raise();
@@ -95,6 +99,7 @@ public:
         textBrowser->raise();
         openDFT->raise();
         Pic->raise();
+        openLSB->raise();
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         MainWindow->setStatusBar(statusbar);
@@ -127,6 +132,7 @@ public:
         cleanLog->setText(QString());
         openDFT->setText(QCoreApplication::translate("MainWindow", "open the DFT Widget", nullptr));
         Pic->setText(QString());
+        openLSB->setText(QCoreApplication::translate("MainWindow", "open the LSB Widget", nullptr));
     } // retranslateUi
 
 };
