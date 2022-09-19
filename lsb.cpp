@@ -9,6 +9,7 @@ lsb::lsb(QWidget *parent) : QWidget(parent),
   this->setAttribute(Qt::WA_QuitOnClose, false);
 
   connect(ui->inputMarkPic, SIGNAL(clicked()), this, SLOT(inputMarkPic()));
+  connect(ui->lsbEmbed, SIGNAL(clicked()), this, SLOT(lsbEmbed_Clicked()));
 }
 
 template <typename _Tp>
@@ -50,8 +51,8 @@ void lsb::inputMarkPic()
     std::string name = code->fromUnicode(m_filePath).data();
     mrk = imread(name, 0);
 
-    this->testConvert();
-    // this->printMat(mrk, ui->markPic);
+    // this->testConvert();
+    this->printMat(mrk, ui->markPic);
   }
 }
 
@@ -69,6 +70,20 @@ void lsb::PrintLog(const QString qstr, QString color, QString size)
                   "\"" + ">" + qstr + "</font>");
 }
 
+void lsb::lsbEmbed_Clicked()
+{
+  vector<Mat> imgs;
+  cv::split(src, imgs);
+  for (int i = 0; i < 3; ++i)
+  {
+    imgs[i] = this->imageLSB(imgs[i], mrk, 7);
+  }
+  Mat img_lsb;
+  cv::merge(imgs, img_lsb);
+
+  this->printMat(img_lsb, ui->lsbPic);
+}
+
 void lsb::showImageLSBWatermark(cv::Mat image, int num)
 {
   cv::Mat dst_img;
@@ -78,7 +93,7 @@ void lsb::showImageLSBWatermark(cv::Mat image, int num)
   vector<int> u;
   int series = pow(2, num);
   int j = 0, k = 0;
-  for (int i = 0; i < v.size() / 3; ++i)
+  for (long long unsigned int i = 0; i < v.size() / 3; ++i)
   {
     j = 0, k = 0;
     v[3 * i] / series % 2 == 0 ? ++j : ++k;
@@ -96,7 +111,7 @@ vector<_Tp> lsb::drawWatermarkOnImage(vector<_Tp> v, vector<_Tp> w, int num)
   if (num > 7 || num < 0)
     return v;
   int series = pow(2, num);
-  for (int i = 0; i < v.size(); ++i)
+  for (long long unsigned int i = 0; i < v.size(); ++i)
   {
     if (v[i] / series % 2 != 0)
       v[i] -= series;
@@ -119,7 +134,7 @@ cv::Mat lsb::imageLSB(cv::Mat src_img, cv::Mat mrk_img, int num)
   vector<int> src_v = convertMatToVector<int>(src_img);
   vector<int> mrk_v = convertMatToVector<int>(mrk_img);
 
-  for (int i = 0; i < mrk_v.size(); ++i)
+  for (long long unsigned int i = 0; i < mrk_v.size(); ++i)
   {
     mrk_v[i] = mrk_v[i] < 120 ? 0 : 1;
   }
@@ -163,9 +178,32 @@ void lsb::printMat(Mat &m_srcImage, QLabel *label)
     //   lWide = m_nImgWidth * 2;
     //   lHeight = m_nImgHeight * 2;
     // }
+    // this->PrintLog("LabelWide: " + QString::number(lWide), "red", "3");
+    // this->PrintLog("LabelHeight: " + QString::number(lHeight), "red", "3");
 
-    label->setPixmap(pixmap.scaled(m_nImgWidth, m_nImgHeight, Qt::IgnoreAspectRatio));
+    // this->PrintLog("PicWide: " + QString::number(m_nImgWidth), "green", "3");
+    // this->PrintLog("PicHeight: " + QString::number(m_nImgHeight), "green", "3");
+
+    int m_height, m_width;
+
+    if (m_nImgWidth > m_nImgHeight)
+    {
+      m_width = lWide;
+      m_height = (int)((double)lWide / (double)m_nImgWidth * (double)m_nImgHeight);
+    }
+    else
+    {
+      m_width = (int)((double)lHeight / (double)m_nImgHeight * (double)m_nImgWidth);
+      m_height = lHeight;
+    }
+
     // label->setAutoFillBackground(true);
+    // this->PrintLog("PicWide: " + QString::number(m_width), "blue", "3");
+    // this->PrintLog("PicHeight: " + QString::number(m_height), "blue", "3");
+
+    // label->setPixmap(pixmap.scaled(m_nImgWidth, m_nImgHeight));
+    label->setPixmap(pixmap.scaled(m_width, m_height, Qt::IgnoreAspectRatio));
+
     QPalette palette;
     palette.setBrush(label->backgroundRole(), QBrush(pixmap));
     label->setPalette(palette);

@@ -39,6 +39,7 @@ class lsb : public QWidget
 public slots:
   void receiveFilePath(QString);
   void inputMarkPic();
+  void lsbEmbed_Clicked();
 
 public:
   explicit lsb(QWidget *parent = nullptr);
@@ -55,8 +56,10 @@ public:
   void testConvert();
 
   cv::Mat imageLSB(cv::Mat, cv::Mat, int);
+  template <typename _Tp>
   vector<_Tp> drawWatermarkOnImage(vector<_Tp>, vector<_Tp>, int);
   void showImageLSBWatermark(cv::Mat, int);
+
 
 private:
   Ui::lsb *ui;

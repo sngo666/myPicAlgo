@@ -164,10 +164,10 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="Pic">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>120</y>
-      <width>231</width>
-      <height>251</height>
+      <x>150</x>
+      <y>30</y>
+      <width>321</width>
+      <height>481</height>
      </rect>
     </property>
     <property name="text">

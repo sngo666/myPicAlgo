@@ -83,7 +83,7 @@ public:
         openDFT->setGeometry(QRect(-10, 350, 151, 41));
         Pic = new QLabel(centralwidget);
         Pic->setObjectName(QString::fromUtf8("Pic"));
-        Pic->setGeometry(QRect(200, 120, 231, 251));
+        Pic->setGeometry(QRect(150, 30, 321, 481));
         openLSB = new QPushButton(centralwidget);
         openLSB->setObjectName(QString::fromUtf8("openLSB"));
         openLSB->setGeometry(QRect(-10, 390, 151, 41));

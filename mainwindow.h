@@ -82,7 +82,7 @@ public:
   // , long, long
   // Mat dftTransfer(Mat &);
   double tsin(double);
-  void matPrint(Mat &);
+  void printMat(Mat &, QLabel *);
   void AutoScale(Mat, Mat);
   QThread *m_workerThread;
   workThread *worker;

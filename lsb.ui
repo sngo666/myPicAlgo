@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>718</width>
+    <width>724</width>
     <height>827</height>
    </rect>
   </property>
@@ -16,20 +16,20 @@
   <widget class="QTextBrowser" name="Msg">
    <property name="geometry">
     <rect>
-     <x>560</x>
-     <y>60</y>
-     <width>161</width>
-     <height>291</height>
+     <x>320</x>
+     <y>0</y>
+     <width>241</width>
+     <height>301</height>
     </rect>
    </property>
   </widget>
   <widget class="QLabel" name="markPic">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>541</width>
-     <height>331</height>
+     <x>0</x>
+     <y>0</y>
+     <width>311</width>
+     <height>291</height>
     </rect>
    </property>
    <property name="text">
@@ -39,10 +39,10 @@
   <widget class="QLabel" name="lsbPic">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>360</y>
+     <x>10</x>
+     <y>310</y>
      <width>711</width>
-     <height>461</height>
+     <height>501</height>
     </rect>
    </property>
    <property name="text">
@@ -72,13 +72,13 @@
     </rect>
    </property>
    <property name="minimum">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="maximum">
-    <number>8</number>
+    <number>7</number>
    </property>
    <property name="value">
-    <number>8</number>
+    <number>7</number>
    </property>
   </widget>
   <widget class="QPushButton" name="operateBit">
@@ -92,6 +92,19 @@
    </property>
    <property name="text">
     <string>apply bit</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="lsbEmbed">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>60</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>LSB embed</string>
    </property>
   </widget>
  </widget>
