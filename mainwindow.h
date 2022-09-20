@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#define UPDATE "2022.9.19"
+#define UPDATE "2022.9.20"
 
 #include <QDebug.h>
 #include <QDesktopWidget.h>

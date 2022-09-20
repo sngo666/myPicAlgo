@@ -27,7 +27,6 @@ public:
     QLabel *lsbPic;
     QPushButton *inputMarkPic;
     QSpinBox *bitPos;
-    QPushButton *operateBit;
     QPushButton *lsbEmbed;
 
     void setupUi(QWidget *lsb)
@@ -37,10 +36,10 @@ public:
         lsb->resize(724, 827);
         Msg = new QTextBrowser(lsb);
         Msg->setObjectName(QString::fromUtf8("Msg"));
-        Msg->setGeometry(QRect(320, 0, 241, 301));
+        Msg->setGeometry(QRect(320, 0, 241, 311));
         markPic = new QLabel(lsb);
         markPic->setObjectName(QString::fromUtf8("markPic"));
-        markPic->setGeometry(QRect(0, 0, 311, 291));
+        markPic->setGeometry(QRect(0, 0, 321, 311));
         lsbPic = new QLabel(lsb);
         lsbPic->setObjectName(QString::fromUtf8("lsbPic"));
         lsbPic->setGeometry(QRect(10, 310, 711, 501));
@@ -49,13 +48,12 @@ public:
         inputMarkPic->setGeometry(QRect(560, 0, 161, 41));
         bitPos = new QSpinBox(lsb);
         bitPos->setObjectName(QString::fromUtf8("bitPos"));
-        bitPos->setGeometry(QRect(660, 40, 61, 22));
+        bitPos->setGeometry(QRect(640, 40, 81, 22));
+        bitPos->setInputMethodHints(Qt::ImhDigitsOnly);
+        bitPos->setWrapping(true);
         bitPos->setMinimum(0);
         bitPos->setMaximum(7);
-        bitPos->setValue(7);
-        operateBit = new QPushButton(lsb);
-        operateBit->setObjectName(QString::fromUtf8("operateBit"));
-        operateBit->setGeometry(QRect(560, 40, 101, 23));
+        bitPos->setValue(0);
         lsbEmbed = new QPushButton(lsb);
         lsbEmbed->setObjectName(QString::fromUtf8("lsbEmbed"));
         lsbEmbed->setGeometry(QRect(560, 60, 161, 41));
@@ -71,7 +69,6 @@ public:
         markPic->setText(QString());
         lsbPic->setText(QString());
         inputMarkPic->setText(QCoreApplication::translate("lsb", "put in markPic", nullptr));
-        operateBit->setText(QCoreApplication::translate("lsb", "apply bit", nullptr));
         lsbEmbed->setText(QCoreApplication::translate("lsb", "LSB embed", nullptr));
     } // retranslateUi
 

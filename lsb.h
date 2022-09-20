@@ -22,6 +22,7 @@
 #include <QLabel.h>
 #include <QTextCodec.h>
 #include <opencv2/opencv.hpp>
+#include <qspinbox.h>
 
 #include "opencv2/imgproc/types_c.h"
 using namespace cv;
@@ -40,6 +41,7 @@ public slots:
   void receiveFilePath(QString);
   void inputMarkPic();
   void lsbEmbed_Clicked();
+  void bitPos_Changed();
 
 public:
   explicit lsb(QWidget *parent = nullptr);
@@ -60,11 +62,11 @@ public:
   vector<_Tp> drawWatermarkOnImage(vector<_Tp>, vector<_Tp>, int);
   void showImageLSBWatermark(cv::Mat, int);
 
-
 private:
   Ui::lsb *ui;
   QString filePath;
   QString markPath;
+  QSpinBox *operatePos;
   Mat src;
   Mat mrk;
   Mat lsbPic;

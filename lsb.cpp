@@ -7,9 +7,11 @@ lsb::lsb(QWidget *parent) : QWidget(parent),
   ui->setupUi(this);
   this->setFixedSize(this->width(), this->height());
   this->setAttribute(Qt::WA_QuitOnClose, false);
+  operatePos = ui->bitPos;
 
   connect(ui->inputMarkPic, SIGNAL(clicked()), this, SLOT(inputMarkPic()));
   connect(ui->lsbEmbed, SIGNAL(clicked()), this, SLOT(lsbEmbed_Clicked()));
+  // connect(ui->bitPos, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), SLOT(bitPos_Changed));
 }
 
 template <typename _Tp>
@@ -70,13 +72,27 @@ void lsb::PrintLog(const QString qstr, QString color, QString size)
                   "\"" + ">" + qstr + "</font>");
 }
 
+void lsb::bitPos_Changed()
+{
+  // vector<Mat> imgs;
+  // cv::split(src, imgs);
+  // for (int i = 0; i < 3; ++i)
+  // {
+  //   imgs[i] = this->imageLSB(imgs[i], mrk, ui->bitPos->text().toInt());
+  // }
+  // Mat img_lsb;
+  // cv::merge(imgs, img_lsb);
+
+  // this->printMat(img_lsb, ui->lsbPic);
+}
+
 void lsb::lsbEmbed_Clicked()
 {
   vector<Mat> imgs;
   cv::split(src, imgs);
   for (int i = 0; i < 3; ++i)
   {
-    imgs[i] = this->imageLSB(imgs[i], mrk, 7);
+    imgs[i % 3] = this->imageLSB(imgs[i % 3], mrk, ui->bitPos->text().toInt());
   }
   Mat img_lsb;
   cv::merge(imgs, img_lsb);

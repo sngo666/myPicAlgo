@@ -150,6 +150,8 @@ void MainWindow::INPUT_clicked()
   {
     //     this->PrintLog("realPath: ", "green", "5");
     //     this->PrintLog(filePath + "\n", "black", "5");
+    createConnection();
+    emit sendData(filePath);
   }
   else
   {
@@ -223,7 +225,7 @@ void MainWindow::SLOT_openLSBWidget()
 {
   QDesktopWidget *desktop = QApplication::desktop();
   lsbWidget->show();
-  dftWidget->move(this->width() * 0.2,
+  lsbWidget->move(desktop->width() - this->width() * 1.2,
                   (desktop->height() / 2 - this->height() / 2));
   QString pathStr = ui->myFilePath->toPlainText();
   if (pathStr.isEmpty())
