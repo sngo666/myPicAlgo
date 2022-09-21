@@ -6,6 +6,8 @@
 #include <QDesktopWidget.h>
 #include <QDialog.h>
 #include <QFileDialog.h>
+#include <QFile>
+#include <QTextStream>
 #include <QImage.h>
 #include <QMainWindow>
 #include <QPushButton.h>

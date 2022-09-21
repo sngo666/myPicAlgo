@@ -18,6 +18,13 @@ MainWindow::MainWindow(QWidget *parent)
   ui->setupUi(this);
   this->setFixedSize(this->width(), this->height());
 
+  QFile file("./qss/myqss.qss");
+  file.open(QFile::ReadOnly);
+  QTextStream filetext(&file);
+  QString stylesheet = filetext.readAll();
+  this->setStyleSheet(stylesheet);
+  file.close();
+
   QString updateTime(UPDATE);
   // this->PrintLog(updateTime, "pink", "4");
   ui->Developer->append("<font size=\" 4 \" color=\"green\">" + updateTime +
