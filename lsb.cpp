@@ -92,7 +92,7 @@ void lsb::lsbEmbed_Clicked()
   cv::split(src, imgs);
   for (int i = 0; i < 3; ++i)
   {
-    imgs[i % 3] = this->imageLSB(imgs[i % 3], mrk, ui->bitPos->text().toInt());
+    imgs[i] = this->imageLSB(imgs[i], mrk, ui->bitPos->text().toInt());
   }
   Mat img_lsb;
   cv::merge(imgs, img_lsb);
@@ -130,8 +130,13 @@ vector<_Tp> lsb::drawWatermarkOnImage(vector<_Tp> v, vector<_Tp> w, int num)
   for (long long unsigned int i = 0; i < v.size(); ++i)
   {
     if (v[i] / series % 2 != 0)
-      v[i] -= series;
+      v[i] -= series; //清空操作位
     v[i] += pow(2, num) * w[i];
+
+    if (v[i] > 254)
+      v[i] = 255;
+    else if (v[i] < 1)
+      v[i] = 0;
   }
   return v;
 }
@@ -201,15 +206,19 @@ void lsb::printMat(Mat &m_srcImage, QLabel *label)
     // this->PrintLog("PicHeight: " + QString::number(m_nImgHeight), "green", "3");
 
     int m_height, m_width;
+    double k2 = (double)m_nImgWidth / (double)m_nImgHeight;
+    double k1 = (double)lWide / (double)lHeight;
 
-    if (m_nImgWidth > m_nImgHeight)
+    // this->PrintLog("k1: " + QString::number(k1), "purple", "3");
+    // this->PrintLog("k2: " + QString::number(k2), "purple", "3");
+    if (k2 >= k1)
     {
       m_width = lWide;
-      m_height = (int)((double)lWide / (double)m_nImgWidth * (double)m_nImgHeight);
+      m_height = (int)(lWide * 1.0 / k2);
     }
     else
     {
-      m_width = (int)((double)lHeight / (double)m_nImgHeight * (double)m_nImgWidth);
+      m_width = (int)(k2 * lHeight);
       m_height = lHeight;
     }
 
@@ -218,7 +227,7 @@ void lsb::printMat(Mat &m_srcImage, QLabel *label)
     // this->PrintLog("PicHeight: " + QString::number(m_height), "blue", "3");
 
     // label->setPixmap(pixmap.scaled(m_nImgWidth, m_nImgHeight));
-    label->setPixmap(pixmap.scaled(m_width, m_height, Qt::IgnoreAspectRatio));
+    label->setPixmap(pixmap.scaled(m_width - 1, m_height - 1, Qt::IgnoreAspectRatio)); //防止溢出
 
     QPalette palette;
     palette.setBrush(label->backgroundRole(), QBrush(pixmap));

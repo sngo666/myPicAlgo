@@ -298,15 +298,19 @@ void MainWindow::printMat(Mat &m_srcImage, QLabel *label)
     // this->PrintLog("PicHeight: " + QString::number(m_nImgHeight), "green", "3");
 
     int m_height, m_width;
+    double k2 = (double)m_nImgWidth / (double)m_nImgHeight;
+    double k1 = (double)lWide / (double)lHeight;
 
-    if (m_nImgWidth > m_nImgHeight)
+    // this->PrintLog("k1: " + QString::number(k1), "purple", "3");
+    // this->PrintLog("k2: " + QString::number(k2), "purple", "3");
+    if (k2 >= k1)
     {
       m_width = lWide;
-      m_height = (int)((double)lWide / (double)m_nImgWidth * (double)m_nImgHeight);
+      m_height = (int)(lWide * 1.0 / k2);
     }
     else
     {
-      m_width = (int)((double)lHeight / (double)m_nImgHeight * (double)m_nImgWidth);
+      m_width = (int)(k2 * lHeight);
       m_height = lHeight;
     }
 
